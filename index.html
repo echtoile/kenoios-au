@@ -1,234 +1,60 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>My Phone</title>
-
-<style>
-* {
-  box-sizing: border-box;
-}
-
-body {
-  margin: 0;
-  min-height: 100vh;
-  background: #222;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-family: Arial, sans-serif;
-}
-
-.phone {
-  width: 340px;
-  height: 690px;
-  border: 8px solid #111;
-  border-radius: 42px;
-  overflow: hidden;
-  position: relative;
-  background: linear-gradient(145deg, #c6b5d9, #e9c6c9);
-  color: white;
-}
-
-.status {
-  display: flex;
-  justify-content: space-between;
-  padding: 18px 20px;
-  font-size: 13px;
-}
-
-#home {
-  padding: 35px 20px;
-}
-
-.clock {
-  font-size: 48px;
-  text-align: center;
-  margin: 15px 0 40px;
-}
-
-.apps {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 25px 12px;
-}
-
-.app {
-  text-align: center;
-  cursor: pointer;
-  font-size: 12px;
-}
-
-.app span {
-  display: block;
-  font-size: 29px;
-  margin-bottom: 6px;
-}
-
-.screen {
-  display: none;
-  position: absolute;
-  inset: 50px 0 0;
-  background: #f7f5f8;
-  color: #222;
-  padding: 20px;
-  overflow-y: auto;
-}
-
-.screen h2 {
-  margin-top: 10px;
-}
-
-.back {
-  border: 0;
-  background: #e9e1ee;
-  padding: 10px 16px;
-  border-radius: 20px;
-  cursor: pointer;
-}
-
-.message {
-  background: #e6e6e6;
-  padding: 12px;
-  border-radius: 16px;
-  margin: 12px 0;
-  max-width: 85%;
-}
-
-.message.sent {
-  background: #b8a0d1;
-  margin-left: auto;
-}
-
-.dock {
-  position: absolute;
-  bottom: 15px;
-  left: 15px;
-  right: 15px;
-  padding: 14px;
-  background: #ffffff55;
-  border-radius: 25px;
-  text-align: center;
-  font-size: 27px;
-}
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#f5eaf0">
+  <title>Elena's iPhone</title>
+  <link rel="stylesheet" href="style.css">
 </head>
-
 <body>
+  <main class="device" aria-label="Fictional iPhone">
+    <div class="dynamic-island"></div>
+    <div class="status-bar"><span id="status-time">9:41</span><span>●●●  Wi-Fi  ▰</span></div>
 
-<div class="phone">
-
-  <div class="status">
-    <span>9:41</span>
-    <span>●●●  Wi-Fi  🔋</span>
-  </div>
-
-  <div id="home">
-    <div class="clock">9:41</div>
-
-    <div class="apps">
-      <div class="app" onclick="openApp('Messages')">
-        <span>💬</span>Messages
+    <section id="lock-screen" class="lock-screen">
+      <p class="lock-date">MONDAY, NOVEMBER 2</p>
+      <h1 id="lock-time">9:41</h1>
+      <p class="lock-subtitle">A little world of her own.</p>
+      <div class="lock-notification">
+        <div class="notification-top"><strong>Messages</strong><span>now</span></div>
+        <p><strong>June</strong></p>
+        <p>are you still awake?</p>
       </div>
+      <button id="unlock-button" class="unlock-button">Tap to open</button>
+    </section>
 
-      <div class="app" onclick="openApp('Instagram')">
-        <span>📷</span>Instagram
+    <section id="home-screen" class="home-screen hidden">
+      <div class="welcome">
+        <p class="eyebrow">MONDAY, NOVEMBER 2</p>
+        <h1>Good morning, Elena.</h1>
+        <p class="muted">Here are a few things you missed.</p>
       </div>
-
-      <div class="app" onclick="openApp('Photos')">
-        <span>🌄</span>Photos
+      <div class="app-grid">
+        <button class="app" data-app="messages"><span class="app-icon messages">✉</span><span>Messages</span></button>
+        <button class="app" data-app="instagram"><span class="app-icon instagram">◎</span><span>Instagram</span></button>
+        <button class="app" data-app="photos"><span class="app-icon photos">🌈</span><span>Photos</span></button>
+        <button class="app" data-app="spotify"><span class="app-icon spotify">≋</span><span>Spotify</span></button>
+        <button class="app" data-app="notes"><span class="app-icon notes">▤</span><span>Notes</span></button>
+        <button class="app" data-app="gmail"><span class="app-icon gmail">M</span><span>Gmail</span></button>
+        <button class="app" data-app="calendar"><span class="app-icon calendar"><small>NOV</small><b>2</b></span><span>Calendar</span></button>
       </div>
-
-      <div class="app" onclick="openApp('Spotify')">
-        <span>🎵</span>Spotify
+      <div class="dock">
+        <span class="dock-icon">☎</span><span class="dock-icon">◉</span><span class="dock-icon">✉</span><span class="dock-icon">♫</span>
       </div>
+    </section>
 
-      <div class="app" onclick="openApp('Notes')">
-        <span>📝</span>Notes
-      </div>
+    <section id="app-screen" class="app-screen hidden">
+      <header class="app-header">
+        <button id="back-button" class="back-button" aria-label="Back to home">‹</button>
+        <h2 id="app-title">Messages</h2>
+        <span class="header-spacer"></span>
+      </header>
+      <div id="app-content" class="app-content"></div>
+    </section>
 
-      <div class="app" onclick="openApp('Calendar')">
-        <span>📅</span>Calendar
-      </div>
-
-      <div class="app" onclick="openApp('Gmail')">
-        <span>✉️</span>Gmail
-      </div>
-
-      <div class="app" onclick="openApp('Settings')">
-        <span>⚙️</span>Settings
-      </div>
-    </div>
-  </div>
-
-  <div class="dock">📞　🌐　💬　🎵</div>
-
-  <div class="screen" id="appScreen">
-    <button class="back" onclick="goHome()">← Back</button>
-    <h2 id="appTitle"></h2>
-    <div id="appContent"></div>
-  </div>
-
-</div>
-
-<script>
-function openApp(name) {
-  document.getElementById('home').style.display = 'none';
-  document.querySelector('.dock').style.display = 'none';
-
-  document.getElementById('appScreen').style.display = 'block';
-  document.getElementById('appTitle').textContent = name;
-
-  const content = document.getElementById('appContent');
-
-  const examples = {
-    Messages: `
-      <p>Messages</p>
-      <div class="message">Hey, are you awake?</div>
-      <div class="message sent">I am. What's up?</div>
-    `,
-    Instagram: `
-      <h3>@yourusername</h3>
-      <p>Posts　Followers　Following</p>
-      <p>Welcome to my Instagram.</p>
-    `,
-    Photos: `
-      <h3>Photo Library</h3>
-      <p>Your photos will appear here.</p>
-    `,
-    Spotify: `
-      <h3>Recently Played</h3>
-      <p>Your favorite songs.</p>
-    `,
-    Notes: `
-      <h3>My Notes</h3>
-      <p>Somewhere between memories and dreams.</p>
-    `,
-    Calendar: `
-      <h3>Calendar</h3>
-      <p>November 2026</p>
-    `,
-    Gmail: `
-      <h3>Inbox</h3>
-      <p>No new messages.</p>
-    `,
-    Settings: `
-      <h3>Settings</h3>
-      <p>Customize your phone.</p>
-    `
-  };
-
-  content.innerHTML = examples[name] || '';
-}
-
-function goHome() {
-  document.getElementById('home').style.display = 'block';
-  document.querySelector('.dock').style.display = 'block';
-  document.getElementById('appScreen').style.display = 'none';
-}
-</script>
-
+    <div class="home-indicator"></div>
+  </main>
+  <script src="script.js"></script>
 </body>
 </html>
